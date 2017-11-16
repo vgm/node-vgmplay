@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>VGMPlayer</title>
+<link rel="stylesheet" href="./photon/css/photon.css">
+<link rel="stylesheet" href="./res/css/range.css">
+<link rel="stylesheet" href="./res/css/app.css">
+<script src="./res/js/range.js" charset="utf-8"></script>
+<!-- script src="./res/js/vgm/sn76489.js" charset="utf-8"></script -->
+<script src="./res/js/app.inc.js" charset="utf-8"></script>
+<script src="./res/js/app.menus.js" charset="utf-8"></script>
+<script src="./res/js/app.tabs.js" charset="utf-8"></script>
+<script src="./res/js/app.onload.js" charset="utf-8"></script>
+</head>
+<body>
+<section class="window" id="win-main">
+<header class="toolbar toolbar-header" id="hdr">
+	<h1 class="title" id="hdr-title"><i class="icon icon-home"></i> VGMPlayer</h1>
+	<!-- nav class="toolbar-tabs">
+		<ul>
+			<li><span class="tab-bg"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+		<symbol id="topleft" viewBox="0 0 214 29">
+			<path d="M20,0 L214,0 L214,29 L0,29 C0,29 11.75,6.5 12.5,5 C13.3,3.5 15,0 20,0 Z"/>
+		</symbol>
+		<symbol id="topright" viewBox="0 0 214 29">
+			<use xlink:href="#topleft" />
+		</symbol>
+		<clipPath id="crop">
+			<rect class="mask" width="100%" height="100%" x="0" />
+		</clipPath>
+	</defs>
+	<svg width="50%" height="100%" transfrom="scale(-1, 1)" id="lefto">
+		<use xlink:href="#topleft" width="214" height="29" class="-background" id="lt-bg" />
+		<use xlink:href="#topleft" width="214" height="29" class="-shadow" id="lt-sh" />
+	</svg>
+	<g transform="scale(-1, 1)" id="righto">
+		<svg width="50%" height="100%" x="-100%" y="0">
+			<use xlink:href="#topright" width="214" height="29" class="-background" id="rt-bg" />
+			<use xlink:href="#topright" width="214" height="29" class="-shadow" id="rt-sh" />
+		</svg>
+	</g>
+</svg>
+</span>
+		<span class="tab-title">Lorem ipsum dolor sit amet, consectetur</span></li>
+		</ul>
+	</nav -->
+	<nav class="toolbar-actions" id="menu-main">
+		<ul class="btn-group">
+			<li class="btn btn-default app-lc" id="menu-main-home"><span class="icon icon-home"></span></li>
+		</ul>
+		<ul class="btn-group" id="act-main">
+			<li class="btn btn-default app-lc" id="act-main-open" data-tip="Open files"><span class="icon icon-folder"></span></li>
+		</ul>
+		<ul class="btn-group" id="act-xport">
+			<li class="btn btn-default app-lc" id="act-xport-prev" data-tip="Previous song"><span class="icon icon-fast-backward"></span></li>
+			<li class="btn btn-default app-lc" id="act-xport-play" data-tip="Play selected"><span class="icon icon-play"></span></li>
+			<li class="btn btn-default app-lc" id="act-xport-next" data-tip="Next song"><span class="icon icon-fast-forward"></span></li>
+		</ul>
+		<ul class="btn-group" id="xport-bar">
+			<li class="btn"><input type="range" min="0" max="100" value="0" class="slider slider-round slider-small" id="xport-bar-range" /></li>
+		</ul>
+		<ul class="btn-group pull-right">
+			<li class="btn btn-default app-lc" id="act-help-about"><span class="icon icon-help"></span></li>
+		</ul>
+	</nav>
+</header>
+<nav class="tab-wr" id="nav-tabs"><ul class="tab-group" rel="panes-main">
+	<li class="tab-item active" for="sec-playlist"><span class="icon icon-home"></span> Browser</li>
+	<li class="tab-item" for="sec-settings"><span class="icon icon-cog"></span> Preferences</li>
+	<li class="tab-item tab-item-fixed"><a class="icon icon-dot-3"></a></li>
+</ul></nav>
+<main class="window-content">
+<div class="tabbed-panes" id="panes-main">
+<section class="pane-group tabbed-pane clearfix" id="sec-playlist">
+	<aside class="pane sidebar" id="pane-left">
+		<nav class="nav-group" id="open-files">
+			<h5 class="nav-group-title">Open Files</h5>
+			<ul id="open-files-list">
+				<!-- li class="nav-group-item"><span class="icon icon-download"></span>Downloads</li -->
+			</ul>
+		</nav>
+	</aside>
+	<section class="pane" id="pane-mid">
+		<h5 class="nav-group-title">Details</h5>
+		<figure class="frame" id="vis-wr" title="Visualizer"><div style="overflow-x:auto; overflow-y:hidden; height:128px; border-radius:4px;"><canvas id="vgm-spec" width="512" height="128" /></div></figure>
+		<div id="vgm-details"></div>
+	</section>
+	<!-- section class="pane padded-more" id="pane-right">
+		<p>TODO right</p>
+	</section -->
+</section>
+<section class="tabbed-pane clearfix" id="sec-settings">
+	<fieldset>
+		<legend>
+			<ul class="btn-group" id="settings-tabs">
+				<!-- li class="btn btn-default" for="settings-pane-intro" id="settings-tabs-1"><span class="icon icon-fast-backward"></span> Tab 1</li -->
+				<li class="btn btn-default" for="settings-pane-sound" id="settings-tabs-sound"><span class="icon icon-sound"></span> Sound</li>
+				<li class="btn btn-default" for="settings-pane-chips" id="settings-tabs-chips"><span class="icon icon-flow-branch"></span> Chips</li>
+			</ul>
+		</legend>
+		<div class="tabbed-panes" id="panes-settings" data-tab-active="settings-pane-intro">
+			<section class="pane tabbed-pane" id="settings-pane-intro">
+				<h3>Settings</h3>
+				<p>Change the application's settings here.</p>
+				<figure class="frame">
+					<img src="./res/img/ic-stop.png" style="width:64px; height:auto;" />
+					<figcaption>Something framed</figcaption>
+				</figure>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<figure class="frame">
+					<img src="./res/img/ic-play.png" style="width:64px; height:auto;" />
+					<figcaption>Something framed</figcaption>
+				</figure>
+			</section>
+			<section class="tabbed-pane" id="settings-pane-sound">
+				<h3>Sound Configuration</h3>
+				<div>Sample rate: <span id="cfg-sampleRate"></span></div>
+				<div>Buffer size: <span id="cfg-bufferSize"></span></div>
+				<div><label>Compact mode: <input id="cfg-compactMode" type="checkbox" /></label></div>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</section>
+			<section class="tabbed-pane" id="settings-pane-chips">
+				<h3>Chips</h3>
+				<p>hello chips</p>
+				<div>
+					<label>Volume: <span class="icon icon-volume"></span> <input type="range" id="cfg-volume" class="slider slider-round slider-small" min="0" max="100" value="100" /></label>
+					<div id="cfg-volume-chips"></div>
+				</div>
+			</section>
+		</div>
+	</fieldset>
+</section>
+</div>
+</main>
+<footer class="toolbar toolbar-footer" id="ftr">
+	<p class="copy">&copy; Alex Rosario</p>
+</footer>
+</section>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+	"name": "vgmplayer",
+	"productName": "VGMPlayer",
+	"version": "0.1.0",
+	"description": "Cross-platform VGM player built with Electron",
+	"author": "Alex Rosario",
+	"main": "main.js",
+	"scripts": {
+		"start": "electron .",
+		"build": "npm run build-osx && npm run build-win",
+		"build-osx": "NODE_ENV=production && asar pack . app.asar --unpack './node_modules/node-notifier/vendor/**'  && electron-packager . $npm_package_productName --overwrite --out=dist --ignore='^/dist$' --prune --asar --platform=darwin --arch=x64 --icon=icon.icns",
+		"build-win": "NODE_ENV=production webpack -p --config webpack.config.js && electron-packager . $npm_package_productName --overwrite --out=dist --ignore='^/dist$' --prune --asar --platform=win32 --arch=all --icon=icon.ico"
+	},
+	"devDependencies": {
+		"electron": "^1.8.0"
+	},
+	"dependencies": {
+		"react": "^15.6.1",
+		"react-desktop": "^0.3.1",
+		"react-dom": "^15.6.1"
+	}
+}
