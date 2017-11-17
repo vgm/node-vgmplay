@@ -1,3 +1,6 @@
+(function(){
+'use strict';
+
 function C6280Channel() {
 	this.frequency = 0;
 	this.control = 0;
@@ -32,7 +35,8 @@ function C6280(clk, rate) {
 	this.lfo_control = 0;
 	this.channel = [];
 	this.attenuation = 16386.0;
-	this.version = 0x101;
+	this.version = 0x102;
+	this.volume = 100;
 	var i;
 	for(i = 0; i < 8; i++) this.channel[i] = new C6280Channel();
 	this.volume_table = new Int16Array(32);
@@ -63,7 +67,7 @@ function C6280(clk, rate) {
 		level *= lv_div;
 	}
 	this.volume_table[31] = 0;
-	console.log(this.volume_table);
+	//console.log(this.volume_table);
 
 	for(i = 0; i < 6; i++) {
 		this.channel[i].Muted = 0x00;
@@ -156,6 +160,7 @@ function C6280(clk, rate) {
 	/** interleaved stereo mix +neo **/
 	this.mixStereo = function(outputs, samples, z) {
 		var _sc = 1.0/this.attenuation, n = z|0, outl, outr;
+		var _v = this.volume/100.0;
 		var ch, i;
 		var vll, vlr;
 
@@ -230,8 +235,8 @@ function C6280(clk, rate) {
 					}
 				}
 			}
-			outputs[n++] += (_sc*outl);// dbg.push(_sc*outl);
-			outputs[n++] += (_sc*outr);
+			outputs[n++] += (_sc*outl*_v);// dbg.push(_sc*outl);
+			outputs[n++] += (_sc*outr*_v);
 		}
 		//console.log('upd',samples,dbg);
 	}
@@ -315,3 +320,23 @@ function C6280(clk, rate) {
 		//this.channel[this.select] = q;
 	}
 };
+
+
+module.exports = {
+	get label(){return "HuC6280"},
+	get channels(){return [
+		"Ch 1","Ch 2","Ch 3","Ch 4","Ch 5","Ch 6"
+	];},
+	"data":{index:-1, pointer:-1, current:128},
+	"create":function(pcl, sr, num){
+		var ret = new C6280(pcl, sr);
+		//ret.init(pcl, sr);
+		//ret.toggle(1,0); ret.toggle(2,0); ret.toggle(3,0); ret.toggle(4,0); ret.toggle(5,0); ret.toggle(6,0); ret.toggle(7,0);
+		//ret.toggle(8,0); ret.toggle(9,0); ret.toggle(10,0); ret.toggle(11,0); ret.toggle(12,0); ret.toggle(13,0); ret.toggle(14,0); ret.toggle(15,0);
+		//ret.config(9);
+		ret.reset();	//// !!!!
+		//ret.write(0x28,0x00);
+		return ret;
+	}
+};
+})();

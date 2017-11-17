@@ -204,7 +204,7 @@ function loadConfig() {
 		}
 		//console.log('attaching chip vol cfg',vgm);
 		var _frag = document.createDocumentFragment();
-		['sn76489','ym2413','ym2612','ym2151','okim6295','qsound'].forEach(function(e,i,a) {
+		['sn76489','ym2413','ym2612','ym2151','okim6295','huc6280','qsound'].forEach(function(e,i,a) {
 			//console.log(vgm[e]);
 			if (e in vgm.chips) {
 				var sl = _makeSlider(e);

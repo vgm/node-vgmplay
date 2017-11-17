@@ -24,7 +24,7 @@ _v.okim6295 = require('./vgm/okim6295.js');
 //_v.rf5c68 = require('./vgm/rf5c68.js');
 //...
 _v.qsound = require('./vgm/qsound.js');
-//_v.huc6280 = require('./vgm/c6280.js');
+_v.huc6280 = require('./vgm/c6280.js');
 
 
 /********
@@ -725,6 +725,10 @@ function _vgm_obj(f, d, sr) {
 						_chips["okim6295"].write(b[z+1], b[z+2], c);
 					}
 					break;
+				case 0xB9:	// 0xB9 aa dd : HuC6280, write value dd to register aa
+					if (_chips["huc6280"]) {
+						_chips['huc6280'].write(b[z+1],b[z+2]);
+					}
 			}
 			_pos += 3;
 			return 0;
