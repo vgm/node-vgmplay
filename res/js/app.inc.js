@@ -325,7 +325,14 @@ document.addEventListener('vgm-play', function(e){
 	function zeroed(n) {var ret = new Float32Array(n); while (--n>-1) ret[n] = 0; return ret;}
 	function zero_it(buf, n) {while (--n>-1) buf[n] = 0;}
 	// 1. WebAudio.scriptProcessorNode stuff
-	if (_audio_proc&&lux.currentVGM) {
+	if (lux.currentVGM) {
+		var cv = document.querySelectorAll("input[data-chip]");
+		if (cv&&cv.length) {
+			cv.forEach(function(_e,i,a){
+				if (!_e.disabled) lux.currentVGM.setVolume(_e.dataset["chip"], _e.value);
+			});
+		}
+		if (_audio_proc) {
 		//if (_audio_proc.onaudioprocess) _audio_proc.resume();
 		//else {
 			var n = lux.config.bufferSize<<1;
@@ -353,6 +360,7 @@ document.addEventListener('vgm-play', function(e){
 			else if (_audio) _audio_proc.connect(_audio.destination);
 			if (lux.draw) lux.draw();
 			//}
+		}
 	}
 	var msg = `${lux.currentVGM.filename} - ${lux.currentVGM.data.length} byte(s)`;
 	//lux.dialog.info(null, "TODO: play VGM!", msg);
