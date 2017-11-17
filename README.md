@@ -18,5 +18,5 @@ This version of node-vgmplay can play VGM files with any of the following sound 
 *	YM2612 (Sega Genesis, among others)
 *	YM2151 (Capcom CPS, among others)
 *	OKIM6295 (Capcom CPS, among others)
-*	HuC6280 (PC-Engine/TurboGrafx-16, among others)
+*	HuC6280 (NEC PC-Engine/TurboGrafx-16, among others)
 *	QSound (Capcom CPS-2, among others)
